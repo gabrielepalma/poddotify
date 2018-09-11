@@ -18,21 +18,18 @@ USAGE:
 By default the input filename is Podfile.lock
 
 Examples:  
-downloading the Podfile.lock from https://github.com/wordpress-mobile/WordPress-iOS 
-running 
+Using Wordpress Podfile.lock:
+https://github.com/wordpress-mobile/WordPress-iOS 
+```sh
 poddotify -i WP-Podfile.lock.txt -lr -ns 
-followed by 
 dot WP-Podfile.lock.dot -Tjpg -O 
-will generate
-<img src="https://raw.githubusercontent.com/gabrielepalma/poddotify/master/WP-Podfile.lock.dot.jpg" width="200" height="200" />
+```
+<img src="https://raw.githubusercontent.com/gabrielepalma/poddotify/master/WP-Podfile.lock.dot.jpg" height="400" />
 
-
-
-
-
-downloading the Podfile.lock from 
+Using Artsy Podfile.lock:
 https://github.com/artsy/eidolon 
-running 
-poddotify -i Artsy-Podfile.lock.txt followed by dot Artsy-Podfile.lock.dot -Tjpg -O 
-will generate
-[![Artsy](https://raw.githubusercontent.com/gabrielepalma/poddotify/master/Artsy-Podfile.lock.dot.jpg)](https://raw.githubusercontent.com/gabrielepalma/poddotify/master/Artsy-Podfile.lock.dot.jpg)
+```sh
+poddotify -i Artsy-Podfile.lock.txt
+dot Artsy-Podfile.lock.dot -Tjpg -O 
+```
+<img src="https://raw.githubusercontent.com/gabrielepalma/poddotify/master/Artsy-Podfile.lock.dot.jpg" />
