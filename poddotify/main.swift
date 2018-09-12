@@ -106,6 +106,7 @@ if verboseOutput {
 
 dependencies.normalizeDependencies()
 dependencies.processTransitiveEdges()
+dependencies.processClusters()
 
 if verboseOutput {
     print("")

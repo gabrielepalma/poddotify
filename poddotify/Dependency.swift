@@ -11,6 +11,7 @@ import Cocoa
 class Dependency : Equatable {
 
     public var stringId : String
+    public var clusterId : String?
     public var generationId : Int
     public var title : String
     public var subspec : String?

@@ -27,8 +27,35 @@ class Graph {
     }
 
     // We compute the transitive closure and we use it to perform a transitive reduction of the graph
-
     func processTransitiveEdges() {
         self.root.recursivelyProcessTransitiveDependencies()
+    }
+
+    public var clusters : [String]?
+    func processClusters() {
+        clusters = []
+        var count = 0
+        var all = self.root.allDependencies
+
+        while let dep = all.first {
+            let members = all.filter { (candidate) -> Bool in
+                return dep.title == candidate.title
+            }
+
+            var clusterName : String? = nil
+            if members.count > 1 {
+                count = count + 1
+                clusterName = "cluster\(count)"
+                clusters?.append("cluster\(count)")
+            }
+
+            for member in members {
+                member.clusterId = clusterName
+            }
+
+            all = all.filter({ (dep) -> Bool in
+                return !members.contains(dep)
+            })
+        }
     }
 }

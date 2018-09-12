@@ -11,47 +11,32 @@ import Cocoa
 extension Graph {
     // A cluster is a set of dependencies sharing the same podspec
     // Either we return the dot source to visualize clusters or we reduce the clusters to a single node
-    func manageClusters(remove : Bool) -> String {
-        self.root.recursivelyProcessTransitiveDependencies()
-        var output = ""
-        var count = 0
-        var all = self.root.allDependencies
+    
+    func dotifyClusters() -> String {
+        return clusters?.map({ (str) -> String in
+            let clusterMembers = self.root.allDependencies.filter({ (dep) -> Bool in
+                return dep.clusterId ?? "" == str
+            }).map({ (dep) -> String in
+                return "\(dep.stringId);"
+            }).joined(separator: "\n")
 
-        while let dep = all.first {
-            let members = all.filter { (candidate) -> Bool in
-                return dep.title == candidate.title
-            }
-            if remove {
-                // We let Graphviz do the dirty work by renaming the member nodes to the same dot id
-                for member in members {
-                    member.subspec = nil
-                    member.stringId = dep.stringId
-                }
-            }
-            else if members.count > 1 {
-                // Dot source to mark subgraphs
-                count = count + 1
-                output.append("subgraph cluster\(count) {\n")
-                output.append("color=blue;\n")
-                for item in members {
-                    output.append("\(item.stringId);\n")
-                }
-                output.append("}\n")
-            }
-            all = all.filter({ (dep) -> Bool in
-                return !members.contains(dep)
-            })
-        }
-        return remove ? "" : output
+            let clusterDefinition : [String] = [
+                "",
+                "subgraph \(str) {",
+                "color=blue;",
+                clusterMembers,
+                "}"
+            ]
+            return clusterDefinition.joined(separator: "\n")
+        }).joined(separator: "\n\n") ?? ""
     }
 
     func dotify(includeSubspecs : Bool, includePodspecVersion : Bool, renderingDirection : Direction) -> String {
         var output = "strict digraph {\n"
         output.append("rankdir=\(renderingDirection.rawValue);\n")
 
-        let clusters = manageClusters(remove: !includeSubspecs)
         if includeSubspecs {
-            output.append(clusters)
+            output.append(dotifyClusters())
         }
 
         for dep in root.dependencies {
@@ -86,14 +71,24 @@ extension Dependency {
     func recursivelyToDot(includeVersion : Bool, includeSubSpecs : Bool, renderingDirection : Direction) -> String {
         let outputVersion = includeVersion ? (self.version != nil ? "|\(self.version ?? "")" : "|") : ""
         let outputSubspec = includeSubSpecs ? "|\(self.subspec ?? " ")" : ""
+
         let label = "\(self.title)\(outputSubspec)\(outputVersion)"
-        var output = "\(self.stringId) [shape=record, label=\"\(layout(escape(label), orientation: renderingDirection))\"];\n"
+        var output = "\(dotId(includeSubSpecs)) [shape=record, label=\"\(layout(escape(label), orientation: renderingDirection))\"];\n"
         for dep in self.dependencies {
-            if self.stringId != dep.stringId {
-                output.append("\(self.stringId) -> \(dep.stringId);\n")
+            if dotId(includeSubSpecs) != dep.dotId(includeSubSpecs) {
+                output.append("\(dotId(includeSubSpecs)) -> \(dep.dotId(includeSubSpecs));\n")
             }
             output.append(dep.recursivelyToDot(includeVersion: includeVersion, includeSubSpecs: includeSubSpecs, renderingDirection: renderingDirection))
         }
         return output
+    }
+}
+
+extension Dependency {
+    func dotId(_ includeSubspecs : Bool) -> String {
+        if let clusterId = clusterId, !includeSubspecs {
+            return clusterId
+        }
+        return stringId
     }
 }
