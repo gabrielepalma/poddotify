@@ -19,12 +19,13 @@ By default the input filename is Podfile.lock
 
 # Installation
 
-Using Homebrew:
+You can use Homebrew to install the binary directly: 
+
 ```sh
 brew install gabrielepalma/tools/poddotify
 ```
 
-Alternatively you can clone this repository, edit the sources, build and run at your leisure.
+Alternatively, you can clone this repository, edit the sources and build and run however you see fit.
 
 # Examples
   
