@@ -17,7 +17,17 @@ USAGE:
  
 By default the input filename is Podfile.lock
 
-Examples:  
+# Installation
+
+Using Homebrew:
+```sh
+brew install gabrielepalma/tools/poddotify
+```
+
+Alternatively you can clone this repository, edit the sources, build and run at your leisure.
+
+# Examples
+  
 Using Wordpress Podfile.lock:
 https://github.com/wordpress-mobile/WordPress-iOS 
 ```sh
