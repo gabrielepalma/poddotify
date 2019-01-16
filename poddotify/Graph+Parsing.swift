@@ -1,9 +1,11 @@
 //
-//  Parser.swift
+//  Graph+Parsing.swift
 //  poddotify
 //
-//  Created by Gabriele Palma on 29/08/2018.
-//  Copyright © 2018 Gabriele Palma. All rights reserved.
+//    ___  ____
+//   / __)(  _ \
+//  ( (_ \ ) __/
+//   \___/(__)   gabrielepalma.name
 //
 
 import Cocoa
