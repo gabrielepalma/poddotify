@@ -47,6 +47,6 @@ dot Artsy-Podfile.lock.dot -Tjpg -O
 
 # Coming next
 
-- ability to splice individual dependencies trees
-- ability to visually compress lone dependencies
+- an option to slice individual dependencies sub-trees
+- an option to visually compress lone dependencies
 - support for Swift Package Manager
