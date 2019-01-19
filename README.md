@@ -44,3 +44,9 @@ poddotify -i Artsy-Podfile.lock.txt
 dot Artsy-Podfile.lock.dot -Tjpg -O 
 ```
 <img src="https://raw.githubusercontent.com/gabrielepalma/poddotify/master/Artsy-Podfile.lock.dot.jpg" />
+
+# Coming next
+
+- ability to splice individual dependencies trees
+- ability to visually compress lone dependencies
+- support for Swift Package Manager
